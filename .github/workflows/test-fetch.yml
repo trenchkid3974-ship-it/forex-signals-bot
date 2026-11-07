@@ -1,0 +1,24 @@
+name: Test - Fetch Market Data
+
+on:
+  workflow_dispatch:   # allows us to run it manually with a button
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    env:
+      TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}
+    steps:
+      - name: Download our code
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install required libraries
+        run: pip install -r requirements.txt
+
+      - name: Run the fetch test
+        run: python test_fetch.py
